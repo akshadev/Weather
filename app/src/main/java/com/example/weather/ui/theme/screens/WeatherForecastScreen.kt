@@ -72,6 +72,12 @@ fun WeatherForecastScreen(
             }
         })
 
+    /*
+        Note: The scenario where the location service is disabled is not currently handled. If time permits,
+        consider implementing a solution to address this case. Prompting the user to enable the location service
+        from within the app would contribute to a better user experience and enhance the overall functionality.
+    */
+
     val state = viewModel.forecastScreenState.collectAsState().value
     val dialogQueue = viewModel.visiblePermissionQueue
 
@@ -119,7 +125,6 @@ fun WeatherForecastScreen(
             SearchedLocationContainer(state.lastSearchLocationForecast, navigateToLocationSelection)
         }
     }
-
 }
 
 /*
@@ -148,8 +153,8 @@ fun CurrentLocationContainer(
 }
 
 /*
-        The 'SearchedLocationContainer' composable is employed to showcase the forecast of the user's searched location.
-        If the user has any searched location, the forecast for that city is displayed; otherwise, a button is shown to navigate to the search screen.
+   'SearchedLocationContainer' composable is employed to showcase the forecast of the user's searched location.
+    If the user has any searched location, the forecast for that city is displayed; otherwise, a button is shown to navigate to the search screen.
  */
 @Composable
 fun SearchedLocationContainer(
@@ -223,7 +228,7 @@ fun WeatherDetailsScreen(
         val temparature =
             forecast.main?.temp?.let { String.format("%.1f", MetricConverter.kelvinToFahrenheit(it)) }
         Text(
-            text = " Temp: $temparature°C", color = Color.White
+            text = " Temp: $temparature°F", color = Color.White
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -273,5 +278,4 @@ fun DetailsScreen() {
     WeatherDetailsScreen(
         ForeCastModel(name = "Location", main = Main(temp = 10.0)), {}, true
     )
-
 }

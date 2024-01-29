@@ -100,4 +100,11 @@ dependencies {
     implementation("androidx.hilt:hilt-work:1.0.0")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
     implementation("androidx.work:work-runtime-ktx:2.8.1")
+
+    //coroutines
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2")
+
+    testImplementation("io.mockk:mockk:1.13.9")
+
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
 }

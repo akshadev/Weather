@@ -103,6 +103,7 @@ fun ShowList(
                 .padding(bottom = 16.dp)
         )
 
+        // LazyColumn for displaying search results or other content
         usLocations.isNotEmpty().let {
             LazyColumn {
                 items(usLocations.size) { index ->

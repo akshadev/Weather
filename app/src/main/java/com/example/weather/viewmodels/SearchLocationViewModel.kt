@@ -21,6 +21,9 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchLocationViewModel @Inject constructor(@ApplicationContext context: Context) :
     ViewModel() {
+    /**
+     * Temporarily, all city names with the country name 'US' are filtered and stored locally in the 'raw' folder.
+     */
     private val rawResourceId = R.raw.cities
     private val _usLocations = MutableStateFlow<List<LocationItem>>(emptyList())
     val usLocations = _usLocations
@@ -52,6 +55,12 @@ class SearchLocationViewModel @Inject constructor(@ApplicationContext context: C
         }
     }
 
+    /*
+        A local JSON file is utilized for filtering US cities. Upon successful file reading, '_usLocations' is updated,
+        and the search bar becomes visible on the screen, enabling users to start searching.
+
+       Scope for improvement: Implementation of data caching will help to skip file reading on the next ViewModel initialization.
+     */
     private fun fetchData(context: Context) {
         viewModelScope.launch {
             _screenState.value = SearchState.LOADING

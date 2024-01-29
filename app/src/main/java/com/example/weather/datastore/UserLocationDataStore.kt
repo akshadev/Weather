@@ -11,12 +11,14 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.map
 
+/*
+The information about the user's last searched location is stored in the data store, ensuring its availability in the next app launch.
+ */
 open class UserLocationDataStore(private val context: Context) {
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
         name = "user_location_preferences"
     )
-
 
     val userLocationFlow: Flow<UserLocation?> = context.dataStore.data
         .map { preferences ->

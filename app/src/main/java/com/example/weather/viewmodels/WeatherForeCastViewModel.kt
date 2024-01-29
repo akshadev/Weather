@@ -34,7 +34,20 @@ class WeatherForeCastViewModel @Inject constructor(
 ) : ViewModel() {
     private var _locationPermissionEvent = MutableSharedFlow<Boolean>()
     val locationPermissionEvent: Flow<Boolean> get() = _locationPermissionEvent.asSharedFlow()
+
+    /*
+    'visiblePermissionQueue' is used to keep track of denied permissions. When a new entry is added to this list,
+    an alert is triggered to inform the user about the importance of the denied permission for the functionality of the app.
+    */
     val visiblePermissionQueue = mutableStateListOf<String>()
+
+    /*
+    'ForecastScreenState' class is to manage the screen state, containing the following attributes:
+   - 'isLoading': Used to determine whether a loader should be displayed. Currently not being utilized.
+   - 'currentLocationForecast': Stores the forecast information of the current location, fetched from the fused API.
+   - 'lastSearchLocationForecast': Holds the forecast information of the user-searched city.
+   - 'error': Provides information about any error that occurred, facilitating error reporting.
+    */
     private val _forecastScreenState = MutableStateFlow(WeatherForeCastState())
     val forecastScreenState = _forecastScreenState.asStateFlow()
     private val _userLocation = MutableLiveData<UserLocation?>()
@@ -44,6 +57,13 @@ class WeatherForeCastViewModel @Inject constructor(
         startLocationFetch()
     }
 
+    /*
+     'startLocationFetch' method is responsible for retrieving the forecast information of the last searched city
+      from the 'userLocationDataStore'. This data store is updated each time the user selects a city in the search screen,
+      ensuring that the most recent city information is available for display.
+
+     Additionally, If location permissions are granted, the user's current location is fetched using FusedLocationProviderClient.
+     */
     private fun startLocationFetch() {
 
         viewModelScope.launch {
@@ -103,6 +123,10 @@ class WeatherForeCastViewModel @Inject constructor(
         visiblePermissionQueue.removeLast()
     }
 
+    /*
+      If permission is granted, location fetching is initiated.
+      Else, a rejection permission is added to 'visiblePermissionQueue', triggering an alert with information on the permission's importance.
+     */
     fun onPermissionResult(
         permission: String, isGranted: Boolean
     ) {
@@ -116,6 +140,10 @@ class WeatherForeCastViewModel @Inject constructor(
         }
     }
 
+    /*
+       This 'fetchForecast' function initiates an API call to OpenWeatherAPI to fetch forecast information based on the provided city name.
+       Upon success, if the city was manually searched by the user, its details are stored in the data store for default forecast retrieval on the next app launch.
+    */
     private fun fetchForecast(location: String, manualSearch: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             weatherRepo.getWeatherForeCast(location).collectLatest { response ->

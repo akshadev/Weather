@@ -20,6 +20,12 @@ import java.io.IOException
 import java.util.Locale
 
 object LocationUtils {
+    /*
+        The 'getAddressFromLocation' function, given a 'Context', latitude, and longitude,
+        utilizes the Geocoder API to fetch the location address corresponding to the provided latitude and longitude.
+
+        Improvement scope: Geocoder.GeocodeListener should have been used
+     */
     fun getAddressFromLocation(
         context: Context,
         latitude: Double,
@@ -33,7 +39,9 @@ object LocationUtils {
             val addresses: List<Address>? = geocoder.getFromLocation(latitude, longitude, 1)
             if (addresses != null && addresses.isNotEmpty()) {
                 val address: Address = addresses[0]
+                // Extract the city name
                 cityName = address.locality
+                // You can also use address.subLocality, address.adminArea, etc. based on your requirements
             }
         } catch (e: IOException) {
             cityName = null

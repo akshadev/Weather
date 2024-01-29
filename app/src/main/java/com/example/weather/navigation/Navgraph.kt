@@ -39,7 +39,7 @@ fun Navigation(navController: NavHostController, modifier: Modifier) {
                 /*
                 When a city name is selected, it is stored in the savedStateHandle before navigating back to the previous screen,
                 which is the WeatherForecastScreen and ensures that the WeatherForecastScreen can access
-                        the chosen city data upon returning.
+                the chosen city data upon returning.
                 */
                 navController.previousBackStackEntry?.savedStateHandle?.set("city", city)
                 navController.popBackStack()
