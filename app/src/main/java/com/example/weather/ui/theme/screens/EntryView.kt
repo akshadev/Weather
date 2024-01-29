@@ -38,6 +38,11 @@ fun EntryView() {
     }
     DisposableEffect(navController) {
 
+        /*
+              The 'OnDestinationChangedListener' is used to control the visibility of top bar app icons based on the current route.
+              The visibility of icons is determined dynamically depending on the active route.
+         */
+
         val listener = NavController.OnDestinationChangedListener { _, _, _ ->
             currentRoute = navController.currentDestination?.route
             showBackIcon = when (currentRoute) {
@@ -80,8 +85,7 @@ fun EntryView() {
                 },
                 actions = {
                     if (showAddIcon) {
-                        IconButton(onClick = { // TODO: add routing to search location
-                            }) {
+                        IconButton(onClick = { navController.navigate(Route.SearchLocation.path) }) {
                             Icon(
                                 imageVector = Icons.Filled.Add,
                                 contentDescription = "Add Location Button"

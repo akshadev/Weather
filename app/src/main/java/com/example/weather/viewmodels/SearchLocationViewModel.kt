@@ -8,6 +8,7 @@ import com.example.weather.models.LocationItem
 import com.example.weather.viewmodels.States.SearchState
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@HiltViewModel
 class SearchLocationViewModel @Inject constructor(@ApplicationContext context: Context) :
     ViewModel() {
     private val rawResourceId = R.raw.cities

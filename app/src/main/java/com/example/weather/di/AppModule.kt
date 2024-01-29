@@ -2,6 +2,7 @@ package com.example.weather.di
 
 import android.content.Context
 import androidx.compose.ui.unit.Constraints
+import com.example.weather.datastore.UserLocationDataStore
 import com.example.weather.repository.ApiInterface
 import com.example.weather.repository.WeatherRepository
 import com.example.weather.repository.WeatherRepositoryImplementation
@@ -31,4 +32,9 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create()).build()
             .create(ApiInterface::class.java)
     }
+    @Singleton
+    @Provides
+    fun getuserLocationDataStore(@ApplicationContext context: Context): UserLocationDataStore =
+        UserLocationDataStore(context)
+
 }

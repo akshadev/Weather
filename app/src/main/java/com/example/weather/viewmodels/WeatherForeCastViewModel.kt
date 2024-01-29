@@ -21,11 +21,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.weather.response.Response
 import com.example.weather.viewmodels.States.WeatherForeCastState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 
-
+@HiltViewModel
 class WeatherForeCastViewModel @Inject constructor(
     private val weatherRepo: WeatherRepository,
     private val userLocationDataStore: UserLocationDataStore,
